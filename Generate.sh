@@ -1,3 +1,4 @@
+sudo apt-get install expect
 echo """#!/usr/bin/expect -f
 # 设置ssh连接的用户名
 set user hadoop
