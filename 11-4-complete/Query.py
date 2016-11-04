@@ -11,6 +11,24 @@ class Query(object):
     def __init__(self,host,ip):
         self.dbms = DBMS(host,ip)
 
+    def get_price_N(self,stock_name,col_name,start_date=None,end_date=None,fields=[]):
+        s_datetime = start_date
+        e_datetime = end_date
+
+        if s_datetime > e_datetime:
+            raise Exception("start time should not be later than end time")
+
+        col = self.dbms.get_col(stock_name, col_name)
+        result = col.find({
+            'datetime': {'$gte': s_datetime, '$lte': e_datetime}
+        })
+        d = []
+        for m in result:
+            del m['_id']
+            d.append(m)
+        DF = df(d)
+        return DF
+
 
 #start_date and end_date are string format like '2016.2.15.10.45'
 #fields is one of []
@@ -32,11 +50,6 @@ class Query(object):
         index =[]
         for m in result:
             del m['_id']
-	    #pa = re.compile(r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)")
-	    #match = pa.match(str(m['datetime']))
-	    #number = ""
-	    #for num in match.groups():
-	    #	number = number+ num
             index.append(m['datetime'])
             if not fields:
                 d.append(m)
@@ -54,4 +67,8 @@ class Query(object):
 query = Query('219.224.169.45', 12345)
 def get_data(stock_name,start_date,end_date,fields=[]):
     a = query.get_price('Data1516',stock_name,start_date,end_date,fields)
+    return a
+
+def get_data_normal(stock_name,start_date,end_date,fields=[]):
+    a = query.get_price_N('Data1516',stock_name,start_date,end_date,fields)
     return a

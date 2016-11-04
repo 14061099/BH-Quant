@@ -1,5 +1,3 @@
-import math
-from datas import Order
 def initialize(context):
     stocks = ['SZ002680']
     context.set_universe(stocks)
