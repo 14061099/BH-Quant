@@ -14,11 +14,24 @@ security = Security(context)
 #print security.security
 o = OrderList(context,security)
 
+
+html = '''<html>
+<head>
+<title>A Sample Page</title>
+</head>
+<body>
+<h1>Hello, World!</h1>
+<hr />
+I have nothing to say.
+</body>
+</html>'''
+
 class  myMainWindow(QtWidgets.QMainWindow):
     def __init__(self , parent = None):
         QtWidgets.QWidget.__init__(self,parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.ui.webView.setHtml(html)
 
         f = open('old.py','r')
         ct = ''
@@ -30,6 +43,7 @@ class  myMainWindow(QtWidgets.QMainWindow):
         self.ui.SaveButton.clicked.connect(self.saveCode)
         self.ui.SaveButton.clicked.connect(self.keyPressEvent)
         self.ui.ClearButton.clicked.connect(self.ui.CodeText.clear)
+
 
     def keyPressEvent(self, QKeyEvent):
         if type(QKeyEvent) == QtGui.QKeyEvent:

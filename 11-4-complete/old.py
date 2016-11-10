@@ -1,5 +1,5 @@
 def initialize(context):
-    stocks = ['SZ002680']
+    stocks = ['SZ399305']
     context.set_universe(stocks)
 
 

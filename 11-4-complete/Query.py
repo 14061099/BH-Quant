@@ -66,9 +66,9 @@ class Query(object):
 
 query = Query('219.224.169.45', 12345)
 def get_data(stock_name,start_date,end_date,fields=[]):
-    a = query.get_price('Data1516',stock_name,start_date,end_date,fields)
+    a = query.get_price('data',stock_name,start_date,end_date,fields)
     return a
 
 def get_data_normal(stock_name,start_date,end_date,fields=[]):
-    a = query.get_price_N('Data1516',stock_name,start_date,end_date,fields)
+    a = query.get_price_N('data',stock_name,start_date,end_date,fields)
     return a

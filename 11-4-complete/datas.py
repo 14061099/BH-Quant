@@ -14,7 +14,7 @@ class Config(object):  # 常量，其中变量不允许在回测运行后修改
 
     @staticmethod
     def stock_pool():
-        return ['SZ002680']
+        return ['SZ399305']
 
     @staticmethod
     def open():
@@ -114,7 +114,7 @@ class Portfolio(object):  # 个体
         self._cash = self._starting_cash
         self._available_cash = self._cash
         self._locked_cash = 0
-        p = [Position('SZ002680')]
+        p = [Position('SZ399305')]
         self._positions = Series(p, index=Config.stock_pool())
         self._total_value = self._cash
         self._positions_value = 0
@@ -363,16 +363,10 @@ class OrderList(object):
         self.security = security
 
     def get_current_price(self, stock_name):
-	
-	#pa = re.compile(r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)")
-	#match = pa.match(str(self.context.current_dt))
-	#number = ""
-	#for num in match.groups():
-        #	number = number+ num
-	sublist = self.security.security[self.context.current_dt.strftime('%Y-%m-%d-%H')]
-	base = sublist.index.to_pydatetime()[0].minute
-	shift = self.context.current_dt.minute - base
-	res = sublist.iloc[shift].end
+        sublist = self.security.security[self.context.current_dt.strftime('%Y-%m-%d-%H')]
+        base = sublist.index.to_pydatetime()[0].minute
+        shift = self.context.current_dt.minute - base
+        res = sublist.iloc[shift].end
         return float(res)
 
     def order(self, stock_name, amount, style=None):  # return id
