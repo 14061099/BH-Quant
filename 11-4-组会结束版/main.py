@@ -9,29 +9,16 @@ import new
 from datetime import datetime
 
 status = False
-context = Context(datetime(2016,5,3,9,31),datetime(2016,5,20,3,0))
+context = Context(datetime(2016,5,3,9,31),datetime(2016,6,20,3,0))
 security = Security(context)
 #print security.security
 o = OrderList(context,security)
-
-
-html = '''<html>
-<head>
-<title>A Sample Page</title>
-</head>
-<body>
-<h1>Hello, World!</h1>
-<hr />
-I have nothing to say.
-</body>
-</html>'''
 
 class  myMainWindow(QtWidgets.QMainWindow):
     def __init__(self , parent = None):
         QtWidgets.QWidget.__init__(self,parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.webView.setHtml(html)
 
         f = open('old.py','r')
         ct = ''
@@ -43,7 +30,6 @@ class  myMainWindow(QtWidgets.QMainWindow):
         self.ui.SaveButton.clicked.connect(self.saveCode)
         self.ui.SaveButton.clicked.connect(self.keyPressEvent)
         self.ui.ClearButton.clicked.connect(self.ui.CodeText.clear)
-
 
     def keyPressEvent(self, QKeyEvent):
         if type(QKeyEvent) == QtGui.QKeyEvent:
@@ -77,7 +63,7 @@ def run():
             p.Update()
         # 盘中
         for t in security.security[context.current_dt.strftime('%Y-%m-%d')]['datetime']:  # 按分钟循环
-            print '--in minute loop',context.current_dt
+            #print '--in minute loop',context.current_dt
             context.Changetime(t)  # 改变时间
             chosen_f.handle_data(context,o)
             # 处理订单:

@@ -14,7 +14,7 @@ class Config(object):  # 常量，其中变量不允许在回测运行后修改
 
     @staticmethod
     def stock_pool():
-        return ['SZ399305']
+        return ['SZ002680']
 
     @staticmethod
     def open():
@@ -114,7 +114,9 @@ class Portfolio(object):  # 个体
         self._cash = self._starting_cash
         self._available_cash = self._cash
         self._locked_cash = 0
-        p = [Position('SZ399305')]
+	p = []
+	for name in Config.stock_pool():
+            p.append(Position(name))
         self._positions = Series(p, index=Config.stock_pool())
         self._total_value = self._cash
         self._positions_value = 0
@@ -357,16 +359,25 @@ class OrderList(object):
     Backup = {}  # orders set of all , do include the canceled orders
     i = 1  # index order id , first order's index is 1
     Trades = {}  # finished orders set
+    price = [0,0]
 
     def __init__(self, context,security):
         self.context = context
         self.security = security
 
     def get_current_price(self, stock_name):
-        sublist = self.security.security[self.context.current_dt.strftime('%Y-%m-%d-%H')]
-        base = sublist.index.to_pydatetime()[0].minute
-        shift = self.context.current_dt.minute - base
-        res = sublist.iloc[shift].end
+	
+	#pa = re.compile(r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)")
+	#match = pa.match(str(self.context.current_dt))
+	#number = ""
+	#for num in match.groups():
+        #	number = number+ num
+	sublist = self.security.security[self.context.current_dt.strftime('%Y-%m-%d-%H')]
+	base = sublist.index.to_pydatetime()[0].minute
+	shift = self.context.current_dt.minute - base
+	res = sublist.iloc[shift].end
+	self.price[1] = self.price[0]	
+	self.price[0] = float(res)
         return float(res)
 
     def order(self, stock_name, amount, style=None):  # return id
