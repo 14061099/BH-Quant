@@ -17,7 +17,7 @@ o = OrderList(context,security)
 
 html = open("./test.html","r")
 html = html.read()
-
+print html
 
 class  myMainWindow(QtWidgets.QMainWindow):
     def __init__(self , parent = None):
@@ -35,7 +35,7 @@ class  myMainWindow(QtWidgets.QMainWindow):
         self.ui.SaveButton.clicked.connect(self.saveCode)
         self.ui.SaveButton.clicked.connect(self.keyPressEvent)
         self.ui.ClearButton.clicked.connect(self.ui.CodeText.clear)
-	self.ui.webView.setHtml(html)
+
 
     def keyPressEvent(self, QKeyEvent):
         if type(QKeyEvent) == QtGui.QKeyEvent:

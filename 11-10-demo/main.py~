@@ -7,13 +7,19 @@ from datas import *
 import old
 import new
 from datetime import datetime
+from buaaquant_hmm import stat_handle
 
 status = False
-context = Context(datetime(2016,5,3,9,31),datetime(2016,5,20,3,0))
+context = Context(datetime(2016,5,3,9,31),datetime(2016,5,7,3,0))
 security = Security(context)
 #print security.security
 o = OrderList(context,security)
 
+hm_state_handle = stat_handle()
+print "if show hmm:"
+swit = raw_input()
+if swit:
+	hm_state_handle.show_hmm()
 
 html = open("./test.html","r")
 html = html.read()
@@ -35,7 +41,7 @@ class  myMainWindow(QtWidgets.QMainWindow):
         self.ui.SaveButton.clicked.connect(self.saveCode)
         self.ui.SaveButton.clicked.connect(self.keyPressEvent)
         self.ui.ClearButton.clicked.connect(self.ui.CodeText.clear)
-	self.ui.webView.setHtml(html)
+	self.ui.webView.setHtml(html,QtCore.QUrl("file:///home/hadoop/PycharmProjects/11-10/test.html"))
 
     def keyPressEvent(self, QKeyEvent):
         if type(QKeyEvent) == QtGui.QKeyEvent:
@@ -73,7 +79,7 @@ def run():
         for t in security.security[context.current_dt.strftime('%Y-%m-%d')]['datetime']:  # 按分钟循环
             print '--in minute loop',context.current_dt
             context.Changetime(t)  # 改变时间
-            chosen_f.handle_data(context,o)
+            chosen_f.handle_data(context,o,hm_state_handle)
             # 处理订单:
             o.order_consume()
             backDate.append(t.strftime('%Y-%m-%d-%H-%M'))

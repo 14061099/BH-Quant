@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWebEngineWidgets 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -78,7 +79,7 @@ class Ui_MainWindow(object):
         self.ResultText.setSizePolicy(sizePolicy)
         self.ResultText.setObjectName("ResultText")
         self.gridLayout.addWidget(self.ResultText, 7, 2, 1, 1)
-        self.webView = QtWebKitWidgets.QWebView(self.centralwidget)
+        self.webView = QtWebEngineWidgets.QWebView(self.centralwidget)
         self.webView.setUrl(QtCore.QUrl("about:blank"))
         self.webView.setObjectName("webView")
         self.gridLayout.addWidget(self.webView, 6, 2, 1, 1)
@@ -110,4 +111,3 @@ class Ui_MainWindow(object):
         self.menuBUAAQUANT.setTitle(_translate("MainWindow", "BUAAQUANT"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
 
-from PyQt5 import QtWebKitWidgets
