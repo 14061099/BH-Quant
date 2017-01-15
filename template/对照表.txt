@@ -1,0 +1,14 @@
+profit_return 收益概况
+deal_detail   交易详情
+day_return    每日概况
+log	      日志输出
+strategy_profit策略收益
+benchmark_profit基准收益
+Alpha		
+Beta
+Sharpe
+Sortino
+Information_ratio
+volatility
+benchmark_volatility
+max_drawdown

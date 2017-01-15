@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+.infoType{font-size:26}
+.infoHead{}
+.infoCode{}
+.infoDetail{}
+</style>
+</head>
+<body>
+
+<div id=''>
+    <h1 class='infoType'>查询与计算</h1>
+    <div id='query'>
+        <div id=''>
+        <text class='infoHead'>历史数据</text><br />
+        <text class='infoCode'><b>attribute_history(stock_name, count, unit='1d')</b><br /></text>
+        <text class='infoDetail'>
+            查询结果不为空时，返回DataFrame格式的表；查询结果为空时返回None<br />
+            stock_name为股票编号<br />
+            count为返回记录条数<br />
+            unit=’跨度+细度’对返回内容筛选。<br />
+            跨度表示间隔多少单位取值，是整数值；<br />
+            细度表示返回的表是分钟级还是天级(取当天9:31的值)。<br />
+            e.g. unit=’5d’，将返回每隔5天的count条记录
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>总价值</text><br />
+        <text class='infoCode'><b>totalValue()</b><br /></text>
+        <text class='infoDetail'>
+            返回当前时刻账户持有的总价值<br />
+            总金钱=各仓位股票当前时刻的价值之和+现金
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>基准价值</text><br />
+        <text class='infoCode'><b>benchmarkValue()</b><br /></text>
+        <text class='infoDetail'>
+            返回当前时刻账户的基准的总价值，即基准持股当前时刻价值+基准剩余现金
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>策略收益</text><br />
+        <text class='infoCode'><b>totalReturns()</b><br /></text>
+        <text class='infoDetail'>
+            返回当前时刻账户策略的收益<br />
+            =(总价值-初始现金)/初始现金
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>基准收益</text><br />
+        <text class='infoCode'><b>benchmarkReturns()</b><br /></text>
+        <text class='infoDetail'>
+            返回当前时刻账户基准的收益<br />
+            =(基准价值-初始现金)/初始现金
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>策略年化收益</text><br />
+        <text class='infoCode'><b>totalAnnualizedReturns()</b><br /></text>
+            设回测天数为d<br />
+            =(策略收益+1)^(250/d)-1<br />
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>基准年化收益</text><br />
+        <text class='infoCode'><b>benchmarkAnnualizedReturns()</b><br /></text>
+        <text class='infoDetail'>
+            设回测天数为d<br />
+            =(基准收益+1)^(250/d)-1
+        </text>
+        </div><br />
+    </div><br />
+    <h1 class='infoType'>设置初始值</h1> 
+    <div id='set'>
+        <div id=''>
+        <text class='infoHead'>设置股票池</text><br />
+        <text class='infoCode'><b>set_universe(universe)</b><br /></text>
+        <text class='infoDetail'>
+            universe为字符串字典，各元素为股票编号
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>设置基准</text><br />
+        <text class='infoCode'><b>set_benchmark(bm_code)</b><br /></text>
+        <text class='infoDetail'>
+            bm_code为股票编号
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>设置初始现金</text><br />
+        <text class='infoCode'><b>set_startingCash(value)</b><br /></text>
+        <text class='infoDetail'>
+            value是正整数
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>设置开始时间</text><br />
+        <text class='infoCode'><b>set_startDate(_datetime)</b><br /></text>
+        <text class='infoDetail'>
+            _datetime为datetime类型，从1990~2016年
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>设置结束时间</text><br />
+        <text class='infoCode'><b>set_endDate(_datetime)</b><br /></text>
+        <text class='infoDetail'>
+            _datetime为datetime类型，从1990~2016年
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>设置时间细度</text><br />
+        <text class='infoCode'><b>set_frequency(frequency)</b><br /></text>
+        <text class='infoDetail'>
+            frequency为’day’或’min’，分别表示天级和分级
+        </text>
+        </div><br />
+    </div><br />
+    <h1 class='infoType'>下订单</h1>   
+    <div id='order'>
+        <div id=''>
+        <text class='infoHead'>按股数</text><br />
+        <text class='infoCode'><b>order(stock_name, amount)</b><br /></text>
+        <text class='infoDetail'>
+            买卖股数为amount的股票<br />
+            amount为正表示买，为负表示卖
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>按价格</text><br />
+        <text class='infoCode'><b>order_value(stock_name, value)</b><br /></text>
+        <text class='infoDetail'>
+            买卖价格为value的股票<br />
+            amount为正表示买，为负表示卖
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>按目标股数</text><br />
+        <text class='infoCode'><b>order_target(stock_name, amount)</b><br /></text>
+        <text class='infoDetail'>
+            买卖股票使股数为amount
+        </text>
+        </div><br />
+        <div id=''>
+        <text class='infoHead'>按目标价格</text><br />
+        <text class='infoCode'><b>order_target_value(stock_name, value)</b><br /></text>
+        <text class='infoDetail'>
+            买卖股票使价格为value
+        </text>
+        </div><br />
+    </div><br />
+</div><br />
+</body>
+</html>

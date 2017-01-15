@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>投资金额视图</title>
+    <script src="echarts.js"></script>
+</head>
+<body>
+<div id="main" style="width: 600px;height:400px;margin-left: auto; margin-right: auto;"></div>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('main'));
+    var arr1=[],arr2=[];
+    function arrTest(){
+        $.ajax({
+            type:"post",
+            async:false,
+            url:"./show.php",
+            data:{},
+            dataType:"json",
+            success:function(result){
+                if (result) {
+                    arr1 = result.date;
+                    arr2 = result.money;
+                }
+            }
+        })
+        return arr1,arr2;
+    }
+    arrTest();
+
+
+    var option = {
+            title: {
+                text: '投资金额视图'
+            },
+            tooltip: {},
+            legend: {
+                data:["金额"]
+            },
+            xAxis: {
+                data: arr1
+    },
+    yAxis: {
+        type : 'value'
+    },
+    series: [{
+        "name": '金额',
+        "type": 'bar',
+        "data": arr2
+    }]
+    };
+    myChart.setOption(option);
+</script>
+</body>
+</html>
+
+
+
